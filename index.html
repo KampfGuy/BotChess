@@ -1,40 +1,58 @@
 <!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>BotChess – Robots Play Chess!</title><link rel="stylesheet" href="style.css">
-</head><body>
-<header><h1>🤖 BotChess <small>robots play chess!</small></h1></header>
-<main>
-  <section id="modebar">
-    <div class="seg" role="tablist">
-      <button id="m-real" class="on">♟️ Real Chess</button>
-      <button id="m-chaos">🌪️ No Rules Chess</button>
+<meta name="theme-color" content="#262421">
+<title>BotChess – play & watch Stockfish bots</title><link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Ctext y=%22.9em%22 font-size=%2290%22%3E%E2%99%9E%3C/text%3E%3C/svg%3E"><link rel="stylesheet" href="style.css">
+</head><body data-build="botchess-v2-stockfish">
+<header class="top">
+  <div class="logo">♞ BotChess <span class="ver">v2 · Stockfish</span></div>
+  <div class="seg" role="tablist">
+    <button id="m-real" class="on">♟ Real Chess</button>
+    <button id="m-chaos">🌪️ No Rules</button>
+  </div>
+</header>
+<main id="layout">
+  <section id="boardcol">
+    <div class="pcard" id="card-top"></div>
+    <div id="boardrow">
+      <div id="evalbar" title="Evaluation (Stockfish)"><div id="evalfill"></div><span id="evaltxt">0.0</span></div>
+      <div id="boardbox"><div id="board" aria-label="chess board"></div><div id="promo" hidden></div></div>
     </div>
-    <div id="modeinfo"></div>
+    <div class="pcard" id="card-bot"></div>
   </section>
-  <div id="layout">
-    <div id="boardwrap">
-      <div class="player" id="pb"></div>
-      <div class="caps" id="capb"></div>
-      <div id="board" aria-label="chess board"></div>
-      <div class="caps" id="capw"></div>
-      <div class="player" id="pw"></div>
-      <div id="banner" hidden></div>
-    </div>
-    <aside id="panel">
-      <label>White: <select id="selw"></select></label>
-      <label>Black: <select id="selb"></select></label>
-      <label class="speed">Speed 🐢 <input type="range" id="speed" min="0" max="100" value="60"> 🐇</label>
+  <aside id="panel">
+    <div id="setup">
+      <div class="row"><label>White <select id="selw"></select></label><label>Black <select id="selb"></select></label></div>
+      <div class="row"><label>Time <select id="tc">
+        <option value="60,0">1 | 0 Bullet</option><option value="180,2">3 | 2 Blitz</option><option value="300,0">5 | 0 Blitz</option>
+        <option value="600,0" selected>10 | 0 Rapid</option><option value="0,0">Unlimited</option></select></label>
+        <label>Bot speed <input type="range" id="speed" min="0" max="100" value="70"></label></div>
       <div class="btns">
         <button id="start" class="go">▶ Start</button>
-        <button id="step">⏭ Step</button>
-        <button id="reset">↺ Reset</button>
+        <button id="newgame">＋ New game</button>
+        <button id="flip" title="Flip board">⇅ Flip</button>
       </div>
-      <div id="status">Press Start to watch the bots play!</div>
-      <h3>Moves</h3><ol id="moves"></ol>
-    </aside>
-  </div>
+      <div class="btns">
+        <button id="resign">🏳 Resign</button><button id="draw">½ Offer draw</button>
+      </div>
+    </div>
+    <div id="status">Loading Stockfish…</div>
+    <div id="movesbox"><table id="moves"><tbody></tbody></table></div>
+    <div class="btns nav">
+      <button id="nav-first" title="First">⏮</button><button id="nav-prev" title="Previous">◀</button>
+      <button id="nav-next" title="Next">▶</button><button id="nav-last" title="Last">⏭</button>
+    </div>
+    <div id="modeinfo"></div>
+  </aside>
 </main>
-<footer>Made for curious kids. Chess rules engine: <a href="js/chess.js.LICENSE">chess.js (BSD-2)</a>. No ads, no tracking.</footer>
+<div id="modal" hidden><div class="card">
+  <button class="x" id="m-close" aria-label="close">✕</button>
+  <div id="m-icon">🏆</div><h2 id="m-title"></h2><p id="m-reason"></p>
+  <div id="m-summary"></div>
+  <div class="btns"><button id="m-rematch" class="go">↻ Rematch</button><button id="m-new">＋ New game</button></div>
+</div></div>
+<footer>BotChess is an original fan project (not affiliated with any chess site).
+ AI: <a href="https://stockfishchess.org/">Stockfish</a> 19 via <a href="https://github.com/nmrugg/stockfish.js">stockfish.js</a> (lite single-threaded WASM, <a href="js/stockfish/COPYING-GPL3.txt">GPL-3.0</a>; source: <a href="https://github.com/official-stockfish/Stockfish">Stockfish</a>, <a href="https://github.com/nmrugg/stockfish.js">stockfish.js</a>, <a href="https://github.com/KampfGuy/BotChess">this site</a>).
+ Rules: <a href="js/chess.js.LICENSE">chess.js (BSD-2)</a>. No ads, no tracking.</footer>
 <script type="module" src="js/app.js"></script>
 </body></html>

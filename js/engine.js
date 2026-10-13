@@ -17,7 +17,7 @@ export class RealGame {
     if (!legal) throw new Error('Illegal move rejected: ' + JSON.stringify(m));
     const r = this.c.move({ from: legal.from, to: legal.to, promotion: legal.promotion });
     if (r.captured) this.captured[r.color].push(r.captured);
-    return { san: r.san, from: r.from, to: r.to, color: r.color };
+    return { san: r.san, from: r.from, to: r.to, color: r.color, captured: r.captured, promotion: r.promotion, uci: r.from + r.to + (r.promotion || ''), check: this.c.in_check() };
   }
   inCheck() { return this.c.in_check(); }
   result() {
@@ -67,7 +67,7 @@ export class ChaosGame {
     if (q && q.type === 'k') this.over = { winner: this.t, reason: 'King captured!' };
     else if (this.ply >= this.cap) this.over = { winner: null, reason: `Move cap (${this.cap} plies) reached` };
     this.t = this.t === 'w' ? 'b' : 'w';
-    return { san, from: m.from, to: m.to, color: p.color };
+    return { san, from: m.from, to: m.to, color: p.color, captured: q ? q.type : undefined, uci: m.from + m.to, check: false };
   }
   inCheck() { return false; }
   result() { return this.over; }
@@ -123,12 +123,12 @@ function chaosPick(moves, skill) {
   return pick(moves);
 }
 export const BOTS = {
-  random: { name: 'Random Rook', emoji: '🎲', blurb: 'Picks any allowed move at random. Very silly!', strength: 1,
+  random: { name: 'Random Rook', emoji: '🎲', rating: 100, blurb: 'Picks any allowed move at random. Very silly!', strength: 1,
     choose: (g, moves) => g.mode === 'chaos' ? chaosPick(moves, 0) : pick(moves) },
-  greedy: { name: 'Greedy Gary', emoji: '🍪', blurb: 'Always grabs the biggest piece it can eat.', strength: 2,
+  greedy: { name: 'Greedy Gary', emoji: '🍪', rating: 250, blurb: 'Always grabs the biggest piece it can eat.', strength: 2,
     choose: (g, moves) => g.mode === 'chaos' ? chaosPick(moves, 1) : greedy(moves) },
-  max2: { name: 'Minimax Max', emoji: '🧠', blurb: 'Thinks 2 moves ahead (alpha-beta search).', strength: 3, depth: 2 },
-  max3: { name: 'Professor Penny', emoji: '🦉', blurb: 'Thinks 3 moves ahead. The toughest bot!', strength: 4, depth: 3 },
+  max2: { name: 'Minimax Max', emoji: '🧠', rating: 600, blurb: 'Thinks 2 moves ahead (alpha-beta search).', strength: 3, depth: 2 },
+  max3: { name: 'Professor Penny', emoji: '🦊', rating: 800, blurb: 'Thinks 3 moves ahead. The toughest bot!', strength: 4, depth: 3 },
 };
 for (const k of ['max2', 'max3']) {
   const d = BOTS[k].depth;
@@ -145,3 +145,6 @@ for (const k of ['max2', 'max3']) {
   };
 }
 export const newGame = mode => mode === 'chaos' ? new ChaosGame() : new RealGame();
+
+// Fen helper for engines
+export const fenOf = g => g.c ? g.c.fen() : null;
