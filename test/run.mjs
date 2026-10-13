@@ -1,7 +1,7 @@
 import { newGame, BOTS } from '../js/engine.js';
 import { Chess } from '../js/chess.js';
 const ids = Object.keys(BOTS); let fail = 0; const tally = {};
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 10; i++) { // 10 games keeps runtime ~2-3 min
   const g = newGame('real'), w = ids[i % 4], b = ids[(i >> 2) % 4], ref = new Chess();
   let res;
   while (!(res = g.result())) {

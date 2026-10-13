@@ -28,7 +28,7 @@ Classic bots (Real Chess "Classic" group, and the Chaos bots in No Rules): 🎲 
 ## Tests
 ```
 node test/stockfish.mjs   # 6 Stockfish games across strengths (fast movetime), every move legal, valid termination, illegal-bestmove fallback
-node test/run.mjs         # classic bots: 20 Real games + 10 chaos games
+node test/run.mjs         # classic bots: 10 Real games + 10 chaos games
 node test/chaos.mjs       # chaos games
 ```
 Screenshots: `docs/screenshot-desktop.png`, `docs/screenshot-phone.png`, `docs/screenshot-gameover.png`, `docs/screenshot-chaos.png`.
