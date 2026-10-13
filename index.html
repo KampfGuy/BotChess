@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>BotChess – Robots Play Chess!</title><link rel="stylesheet" href="style.css">
+</head><body>
+<header><h1>🤖 BotChess <small>robots play chess!</small></h1></header>
+<main>
+  <section id="modebar">
+    <div class="seg" role="tablist">
+      <button id="m-real" class="on">♟️ Real Chess</button>
+      <button id="m-chaos">🌪️ No Rules Chess</button>
+    </div>
+    <div id="modeinfo"></div>
+  </section>
+  <div id="layout">
+    <div id="boardwrap">
+      <div class="player" id="pb"></div>
+      <div class="caps" id="capb"></div>
+      <div id="board" aria-label="chess board"></div>
+      <div class="caps" id="capw"></div>
+      <div class="player" id="pw"></div>
+      <div id="banner" hidden></div>
+    </div>
+    <aside id="panel">
+      <label>White: <select id="selw"></select></label>
+      <label>Black: <select id="selb"></select></label>
+      <label class="speed">Speed 🐢 <input type="range" id="speed" min="0" max="100" value="60"> 🐇</label>
+      <div class="btns">
+        <button id="start" class="go">▶ Start</button>
+        <button id="step">⏭ Step</button>
+        <button id="reset">↺ Reset</button>
+      </div>
+      <div id="status">Press Start to watch the bots play!</div>
+      <h3>Moves</h3><ol id="moves"></ol>
+    </aside>
+  </div>
+</main>
+<footer>Made for curious kids. Chess rules engine: <a href="js/chess.js.LICENSE">chess.js (BSD-2)</a>. No ads, no tracking.</footer>
+<script type="module" src="js/app.js"></script>
+</body></html>
